@@ -18,20 +18,24 @@ void ofxPrinter::print(ofImage & _img)
 	switch (type)
 	{
 	case OF_IMAGE_GRAYSCALE:
-		ofLogError("ofxPrinter") << "image type grayscale,only support png and jpg" << endl;
+		ofLogNotice("ofxPrinter") << "set image type OF_IMAGE_GRAYSCALE to OF_IMAGE_COLOR" << endl;
+		_img.setImageType(OF_IMAGE_COLOR);
 		break;
 	case OF_IMAGE_COLOR:
-		ImgPrint24((char *)_img.getPixelsRef().getPixels(), _img.getWidth(), _img.getHeight(), true);
 		break;
 	case OF_IMAGE_COLOR_ALPHA:
-		ImgPrint32((char *)_img.getPixelsRef().getPixels(), _img.getWidth(), _img.getHeight(), true);
+		ofLogNotice("ofxPrinter") << "set image type OF_IMAGE_COLOR_ALPHA to OF_IMAGE_COLOR" << endl;
+		_img.setImageType(OF_IMAGE_COLOR);
 		break;
 	case OF_IMAGE_UNDEFINED:
-		ofLogError("ofxPrinter") << "image type undefined,only support png and jpg" << endl;
+		ofLogError("ofxPrinter") << "image type undefined" << endl;
+		return;
 		break;
 	default:
+		ofLogError("ofxPrinter") << "defalut:image type undefined" << endl;
 		break;
 	}
+	ImgPrint24((char *)_img.getPixelsRef().getPixels(), _img.getWidth(), _img.getHeight(), true);
 }
 
 void ofxPrinter::print(string _filePath)
